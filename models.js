@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-// Определяем схему данных для сущности "Пользователь"
+//Визначте схему даних для сутності User
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   age: { type: Number, required: true },
 });
 
-// Создаем модель на основе схемы данных
+//Створення моделі на основі схеми даних
 const User = mongoose.model('User', userSchema);
 
-// Экспортируем модель, чтобы она была доступна из других файлов
+//Експортуйте модель, щоб вона була доступна з інших файлів
 module.exports = { User };

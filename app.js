@@ -1,43 +1,43 @@
 // app.js
 
 const mongoose = require('mongoose');
-const { User } = require('./models'); // Импортируем модель пользователя из файла models.js
+const { User } = require('./models'); // Імпорт моделі користувача з файлу models.js
 
-// Подключаемся к базе данных MongoDB
+// Підключення до бази даних MongoDB
 mongoose.connect('mongodb://localhost:27017/my_database', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Проверяем соединение
+// Перевірка з'єднання
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', async function() {
   console.log('Connected to MongoDB');
 
   try {
-    // Создаем нового пользователя
+    // Створення нового користувача
     const newUser = new User({
       username: 'JohnDoe',
       email: 'john@example.com',
       age: 30
     });
 
-    // Сохраняем пользователя в базе данных
+    // Збереження користувача в базі даних
     const savedUser = await newUser.save();
     console.log('User created:', savedUser);
 
-    // Найдем пользователя по имени
+    // Знайдемо користувача на ім'я
     const foundUser = await User.findOne({ username: 'JohnDoe' });
     console.log('Found user:', foundUser);
 
-    // Обновим возраст пользователя
+    // Оновимо вік користувача
     foundUser.age += 1;
     const updatedUser = await foundUser.save();
     console.log('Updated user:', updatedUser);
 
-    // Удалим пользователя
+    // Видалити користувача
 const deletedUser = await User.findOneAndDelete({ _id: updatedUser._id });
 console.log('User deleted:', deletedUser);
 
-    // Закрываем соединение с базой данных
+    // Закриття з'єднання з базою даних
     mongoose.connection.close();
   } catch (error) {
     console.error('Error:', error);
